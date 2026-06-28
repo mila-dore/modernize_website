@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import Image from "next/image"
 
 export function WorkshopHero() {
   return (
@@ -39,8 +40,16 @@ export function WorkshopHero() {
           </div>
         </div>
 
-        <div className="rounded-3xl bg-card ring-1 ring-border h-80 lg:h-[420px]" />
-      </div>
+        <div className="relative h-80 overflow-hidden rounded-3xl ring-1 ring-border lg:h-[420px]">
+            <Image
+                src="/images/emplois_adaptes3.jpg"
+                alt="Personne participant à un atelier Polyval"
+                fill
+                className="object-cover"
+                priority
+            />
+        </div>
+    </div>
     </section>
   )
 }

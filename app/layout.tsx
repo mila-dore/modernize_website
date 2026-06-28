@@ -56,6 +56,7 @@ export default function RootLayout({
   return (
     <html
       scroll-behavior="smooth"
+      data-scroll-behavior="smooth"
       lang="fr"
       suppressHydrationWarning
       className={`${bricolage.variable} ${inter.variable} bg-background`}

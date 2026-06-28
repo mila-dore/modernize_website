@@ -1,3 +1,5 @@
+// components/prestations/prestations.tsx
+
 import Image from "next/image"
 import {
   Package,
@@ -6,39 +8,46 @@ import {
   Shirt,
   Boxes,
   Wrench,
-  ArrowUpRight,
+  ArrowUpRight
 } from "lucide-react"
+import Link from "next/link"
 
 const services = [
   {
     icon: Package,
     title: "Cartonnage & Packaging",
     desc: "Fabrication, mise sous pli et solutions d'emballage sur mesure.",
+    href: "/prestations/cartonnage-packaging",
   },
   {
     icon: Boxes,
     title: "Multiservice & Co-packing",
     desc: "Conditionnement, assemblage et logistique flexibles.",
+    href: "/prestations/co-packing",
   },
   {
     icon: Cog,
     title: "Mécanique de précision",
     desc: "Usinage et montage avec un parc de machines automatisées.",
+    href: "/prestations/mecanique-precision",
   },
   {
     icon: Pill,
     title: "Conditionnement pharmaceutique",
     desc: "Process certifiés répondant aux exigences du secteur.",
+    href: "/prestations/conditionnement-pharmaceutique",
   },
   {
     icon: Shirt,
     title: "Blanchisserie RABC",
     desc: "Traitement du linge selon les normes d'hygiène RABC.",
+    href: "/prestations/blanchisserie",
   },
   {
     icon: Wrench,
     title: "Solutions sur mesure",
     desc: "De la production en série aux commandes spécifiques.",
+    href: "/prestations/solutions-sur-mesure",
   },
 ]
 
@@ -76,20 +85,30 @@ export function Expertise() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             {services.map((s) => (
-              <div
-                key={s.title}
-                className="group flex flex-col rounded-2xl bg-card p-6 ring-1 ring-border transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 hover:ring-primary/20"
-              >
-                <span className="grid size-11 place-items-center rounded-xl bg-secondary text-primary transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
-                  <s.icon className="size-5" />
-                </span>
-                <h3 className="mt-4 font-heading text-lg font-semibold text-primary">
-                  {s.title}
-                </h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-foreground/65">
-                  {s.desc}
-                </p>
-              </div>
+            <div
+              key={s.title}
+              className="group flex flex-col rounded-2xl bg-card p-6 ring-1 ring-border transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 hover:ring-primary/20"
+          >
+            <span className="grid size-11 place-items-center rounded-xl bg-secondary text-primary transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
+              <s.icon className="size-5" />
+            </span>
+
+            <h3 className="mt-4 font-heading text-lg font-semibold text-primary">
+              {s.title}
+            </h3>
+
+            <p className="mt-2 text-sm leading-relaxed text-foreground/65">
+              {s.desc}
+            </p>
+
+            <Link
+              href={s.href}
+              className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-accent"
+            >
+              Découvrir l'atelier
+              <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </Link>
+          </div>
             ))}
           </div>
         </div>

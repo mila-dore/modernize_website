@@ -12,7 +12,7 @@ import { ContextSwitch } from "@/components/ui/context-switch"
 export default function Page() {
   return (
     <>
-     
+
       <WorkshopHero />
       <ContextSwitch
           label="Vous cherchez un emploi ou un stage ?"

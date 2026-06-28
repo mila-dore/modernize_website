@@ -1,6 +1,7 @@
+// components/site-header.tsx
+
 "use client"
 
-// import Link from "next/Link"
 import { useEffect, useState } from "react"
 import { ChevronDown, Menu, X } from "lucide-react"
 import { Logo } from "@/components/logo"

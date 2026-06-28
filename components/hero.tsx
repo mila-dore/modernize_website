@@ -1,3 +1,5 @@
+// components/hero.tsx
+
 import Image from "next/image"
 import { ArrowRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"

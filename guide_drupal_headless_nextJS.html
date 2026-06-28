@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide Drupal Headless + Next.js</title>
+<style>
+body{
+  font-family: system-ui, sans-serif;
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 24px;
+  line-height: 1.7;
+}
+h1,h2,h3{margin-top:2rem}
+pre{
+  background:#f5f5f5;
+  padding:16px;
+  overflow:auto;
+  border-radius:8px;
+}
+code{font-family:Consolas, monospace}
+.chapter{
+  border-bottom:1px solid #ddd;
+  padding-bottom:20px;
+  margin-bottom:30px;
+}
+.note{
+  padding:12px;
+  border-left:4px solid #666;
+  background:#fafafa;
+}
+</style>
+</head>
+<body>
+
+<h1>Guide Drupal CMS → Drupal Headless + Next.js</h1>
+
+<div class="chapter">
+<h2>1. Architecture cible</h2>
+<pre><code>Drupal
+  ↓
+JSON:API
+  ↓
+Next.js
+  ↓
+Utilisateur</code></pre>
+<p>Drupal gère le contenu. Next.js gère l'affichage.</p>
+</div>
+
+<div class="chapter">
+<h2>2. Pourquoi JSON:API ?</h2>
+<p>Ne pas accéder directement aux tables MySQL/PostgreSQL.</p>
+<ul>
+<li>Sécurité</li>
+<li>Permissions Drupal</li>
+<li>Workflows</li>
+<li>Structure interne masquée</li>
+<li>Maintenance simplifiée</li>
+</ul>
+</div>
+
+<div class="chapter">
+<h2>3. Création des mocks</h2>
+
+<h3>articles.ts</h3>
+<pre><code>export const articles = [
+  {
+    id: "1",
+    slug: "premier-article",
+    title: "Premier article",
+    excerpt: "Résumé",
+    content: "Contenu complet",
+    publishedAt: "2026-06-25"
+  }
+]</code></pre>
+
+<h3>news.ts</h3>
+<pre><code>export const news = [
+  {
+    id: "1",
+    slug: "nouvelle-annonce",
+    title: "Nouvelle annonce",
+    summary: "Résumé",
+    content: "Contenu complet"
+  }
+]</code></pre>
+
+<h3>events.ts</h3>
+<pre><code>export const events = [
+  {
+    id: "1",
+    slug: "conference-ia",
+    title: "Conférence IA",
+    location: "Zurich",
+    date: "2026-07-15"
+  }
+]</code></pre>
+</div>
+
+<div class="chapter">
+<h2>4. Structure Next.js</h2>
+<pre><code>app/
+├─ articles/
+│  ├─ page.tsx
+│  └─ [slug]/page.tsx
+├─ news/
+│  ├─ page.tsx
+│  └─ [slug]/page.tsx
+└─ events/
+   ├─ page.tsx
+   └─ [slug]/page.tsx</code></pre>
+</div>
+
+<div class="chapter">
+<h2>5. Couche API</h2>
+<pre><code>lib/api/
+├─ articles.ts
+├─ news.ts
+└─ events.ts</code></pre>
+
+<pre><code>import { articles } from "@/data/articles"
+
+export async function getArticles() {
+  return articles
+}</code></pre>
+</div>
+
+<div class="chapter">
+<h2>6. Passage à Drupal</h2>
+
+<pre><code>export async function getArticles() {
+  const res = await fetch(
+    `${process.env.DRUPAL_URL}/jsonapi/node/article`
+  )
+
+  const json = await res.json()
+  return json.data
+}</code></pre>
+</div>
+
+<div class="chapter">
+<h2>7. Cache et revalidation</h2>
+
+<h3>Toujours frais</h3>
+<pre><code>fetch(url, {
+  cache: "no-store"
+})</code></pre>
+
+<h3>Revalidation</h3>
+<pre><code>fetch(url, {
+  next: {
+    revalidate: 60
+  }
+})</code></pre>
+
+<div class="note">
+Quand un contenu est créé dans Drupal, JSON:API le voit immédiatement.
+Le délai éventuel vient généralement du cache Next.js.
+</div>
+
+</div>
+
+<div class="chapter">
+<h2>8. Roadmap</h2>
+<ol>
+<li>Stabiliser les routes</li>
+<li>Créer les mocks</li>
+<li>Créer les pages détail</li>
+<li>Connecter Drupal</li>
+<li>Mapper JSON:API</li>
+<li>Gérer images et relations</li>
+<li>Mettre en place le cache</li>
+<li>Déployer</li>
+</ol>
+</div>
+
+</body>
+</html>

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Mail, Phone } from "lucide-react"
+import Link from "next/link"
 
 export function WorkshopCTA() {
   return (
@@ -21,14 +22,20 @@ export function WorkshopCTA() {
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
 
-            <Button className="gap-2">
-              <Phone className="size-4" />
-              Nous appeler
+            <Button
+                render={<a href="tel:+41216427070" />}
+                nativeButton={false}
+                className="gap-2"
+                >
+                <Phone className="size-4" />
+                Nous appeler
             </Button>
 
             <Button variant="outline" className="gap-2">
               <Mail className="size-4" />
-              Nous contacter
+              <Link href="/#contact">
+                Nous contacter
+              </Link>
             </Button>
 
           </div>
